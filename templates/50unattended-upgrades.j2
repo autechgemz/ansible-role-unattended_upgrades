@@ -1,0 +1,101 @@
+// {{ ansible_managed }}
+{% if unattended_upgrades_allowed_origins %}
+Unattended-Upgrade::Allowed-Origins {
+{%   for line in unattended_upgrades_allowed_origins %}
+	"{{ line }}";
+{%   endfor %}
+};
+{% endif %}
+{% if unattended_upgrades_package_blacklist %}
+Unattended-Upgrade::Package-Blacklist {
+{%   for line in unattended_upgrades_package_blacklist %}
+	"{{ line }}";
+{%   endfor %}
+};
+{% endif %}
+{% if unattended_upgrades_devrelease %}
+Unattended-Upgrade::DevRelease "{{ unattended_upgrades_devrelease }}";
+{% endif %}
+{% if unattended_upgrades_autofix_interrupt_dpkg %}
+Unattended-Upgrade::AutoFixInterruptedDpkg "true";
+{% else %}
+Unattended-Upgrade::AutoFixInterruptedDpkg "false";
+{% endif %}
+{% if unattended_upgrades_minimal_steps %}
+Unattended-Upgrade::MinimalSteps "true";
+{% else %}
+Unattended-Upgrade::MinimalSteps "false";
+{% endif %}
+{% if unattended_upgrades_install_on_shutdown %}
+Unattended-Upgrade::InstallOnShutdown "true";
+{% else %}
+Unattended-Upgrade::InstallOnShutdown "false";
+{% endif %}
+{% if unattended_upgrades_mailto %}
+Unattended-Upgrade::Mail "{{ unattended_upgrades_mailto | default("") }}";
+{% endif %}
+{% if unattended_upgrades_mailreport %}
+Unattended-Upgrade::MailReport "{{ unattended_upgrades_mailreport | default("") }}";
+{% endif %}
+{% if unattended_upgrades_remove_unused_kernel %}
+Unattended-Upgrade::Remove-Unused-Kernel-Packages "true";
+{% else %}
+Unattended-Upgrade::Remove-Unused-Kernel-Packages "false";
+{% endif %}
+{% if unattended_upgrades_remove_new_unused_dependencies %}
+Unattended-Upgrade::Remove-New-Unused-Dependencies "true";
+{% else %}
+Unattended-Upgrade::Remove-New-Unused-Dependencies "false";
+{% endif %}
+{% if unattended_upgrades_remove_unused_dependencies %}
+Unattended-Upgrade::Remove-Unused-Dependencies "true";
+{% else %}
+Unattended-Upgrade::Remove-Unused-Dependencies "false";
+{% endif %}
+{% if unattended_upgrades_automatic_reboot %}
+Unattended-Upgrade::Automatic-Reboot "true";
+{%   if unattended_upgrades_automatic_reboot_withuser %}
+Unattended-Upgrade::Automatic-Reboot-WithUsers "true";
+{%   else %}
+Unattended-Upgrade::Automatic-Reboot-WithUsers "false";
+{%   endif %}
+Unattended-Upgrade::Automatic-Reboot-Time "{{ unattended_upgrades_automatic_reboot_time }}";
+{% else %}
+Unattended-Upgrade::Automatic-Reboot "false";
+{% endif %}
+{% if unattended_upgrades_download_limit %}
+Acquire::http::Dl-Limit "{{ unattended_upgrades_download_limit_value }}";
+{% endif %}
+{% if unattended_upgrades_syslog_enable %}
+Unattended-Upgrade::SyslogEnable "true";
+{% else %}
+Unattended-Upgrade::SyslogEnable "false";
+{% endif %}
+{% if unattended_upgrades_syslog_facility %}
+Unattended-Upgrade::SyslogFacility "{{ unattended_upgrades_syslog_facility }}";
+{% endif %}
+{% if unattended_upgrades_only_acpower %}
+Unattended-Upgrade::OnlyOnACPower "true";
+{% else %}
+Unattended-Upgrade::OnlyOnACPower "false";
+{% endif %}
+{% if unattended_upgrades_skip_nonmeterd_connection %}
+Unattended-Upgrade::Skip-Updates-On-Metered-Connections "true";
+{% else %}
+Unattended-Upgrade::Skip-Updates-On-Metered-Connections "false";
+{% endif %}
+{% if unattended_upgrades_verbose %}
+Unattended-Upgrade::Verbose "true";
+{% else %}
+Unattended-Upgrade::Verbose "false";
+{% endif %}
+{% if unattended_upgrades_debug %}
+Unattended-Upgrade::Debug "true";
+{% else %}
+Unattended-Upgrade::Debug "false";
+{% endif %}
+{% if unattended_upgrades_allow_downgrade %}
+Unattended-Upgrade::Allow-downgrade "true";
+{% else %}
+Unattended-Upgrade::Allow-downgrade "false";
+{% endif %}

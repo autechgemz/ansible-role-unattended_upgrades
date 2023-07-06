@@ -1,0 +1,7 @@
+---
+- name: Restart service
+  when: not ansible_check_mode
+  become: true
+  systemd:
+    name: "{{ unattended_upgrades_service_name }}"
+    state: restarted

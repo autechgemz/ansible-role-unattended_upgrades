@@ -1,0 +1,26 @@
+---
+
+- name: Unattended_upgrades tasks
+  when: ansible_facts['distribution'] == 'Ubuntu'
+  tags:
+    - unattended_upgrades_install
+    - unattended_upgrades_config
+    - unattended_upgrades_service
+    - unattended_upgrades
+  block:
+    - name: Set dependency variables
+      ansible.builtin.include_vars: "{{ item }}"
+      loop:
+        - "{{ ansible_distribution_major_version }}.yml"
+        - "{{ ansible_distribution }}.yml"
+    - name: Installation tasks
+      ansible.builtin.import_tasks: install.yml
+    - name: Configration tasks
+      ansible.builtin.import_tasks: config.yml
+    - name: Service tasks
+      ansible.builtin.import_tasks: service.yml
+  rescue:
+    - name: Print Error
+      ansible.builtin.debug:
+        msg: "Unsupport platform or error occurred due to some reason."
+      failed_when: true

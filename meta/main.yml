@@ -1,0 +1,9 @@
+galaxy_info:
+  role_name: unattended_upgrades
+  namespace: autechgemz
+  author: "autechgemz@gmail.com"
+  description: "Manage unattended-upgrade - automatic installation of security (and other) upgrades."
+  license: MIT
+  min_ansible_version: "1.2"
+  galaxy_tags: []
+dependencies: []

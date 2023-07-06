@@ -1,0 +1,5 @@
+---
+
+unattended_upgrades_package_name: [ 'unattended-upgrades' ]
+
+unattended_upgrades_service_name: 'unattended-upgrades'

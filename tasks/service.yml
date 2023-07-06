@@ -1,0 +1,14 @@
+---
+
+- name: Service tasks
+  when: not ansible_check_mode
+  tags:
+    - unattended_upgrades_service
+    - unattended_upgrades
+  become: true
+  block:
+    - name: Manage unattended_upgrades service
+      service:
+        name: "{{ unattended_upgrades_service_name }}"
+        state: "{{ unattended_upgrades_service_ensure }}" 
+        enabled: "{{ unattended_upgrades_service_enable }}" 
