@@ -1,6 +1,7 @@
 ---
 
 - name: Configration tasks
+  when: unattended_upgrades_package_ensure != 'absent'
   tags:
     - unattended_upgrades_config
     - unattended_upgrades
