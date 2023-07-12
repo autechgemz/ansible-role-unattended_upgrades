@@ -9,7 +9,6 @@
   block:
   - name: Manage Install packages 
     ansible.builtin.apt:
-      name: ["{{ item }}"]
+      name: "{{ unattended_upgrades_package_name }}"
       update_cache: true
       state: "{{ unattended_upgrades_package_ensure }}"
-    with_items: "{{ unattended_upgrades_package_name }}"
