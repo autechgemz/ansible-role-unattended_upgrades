@@ -7,8 +7,8 @@
     - unattended_upgrades
   become: true
   block:
-    - name: Manage unattended_upgrades service
-      service:
+    - name: Manage service
+      ansible.builtin.service:
         name: "{{ unattended_upgrades_service_name }}"
-        state: "{{ unattended_upgrades_service_ensure }}" 
-        enabled: "{{ unattended_upgrades_service_enable }}" 
+        state: "{{ unattended_upgrades_service_ensure }}"
+        enabled: "{{ unattended_upgrades_service_enable }}"

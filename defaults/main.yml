@@ -4,9 +4,33 @@ unattended_upgrades_package_ensure: 'present'
 unattended_upgrades_service_ensure: 'started'
 unattended_upgrades_service_enable: true
 
+# Additional configurations that will be appended to the generated config files
+# This allows adding configuration directives that are not covered by role variables
+# Example:
+#   unattended_upgrades_append_config:
+#     - name: 20auto-upgrades
+#       config: |
+#         APT::Periodic::Verbose "2";
+#     - name: 50unattended-upgrades
+#       config: |
+#         Unattended-Upgrade::Mail-Only-On-Error "true";
+unattended_upgrades_append_config: []
+
+unattended_upgrades_extra_config:
+  - name: 20auto-upgrades
+    config: |
+      APT::Periodic::Verbose "2";
+  - name: 50unattended-upgrades
+    config: |
+      Unattended-Upgrade::Mail-Only-On-Error "true";
+
 #####################################################################
 # 20auto-upgrades
 #####################################################################
+
+# Enable APT periodic updates
+# APT::Periodic::Enable "1";
+unattended_upgrades_periodic_enable: '1'
 
 # Do "apt-get update" automatically every n-days (0=disable)
 # APT::Periodic::Update-Package-Lists "1";
@@ -39,18 +63,6 @@ unattended_upgrades_allowed_origins:
   - '${distro_id}:${distro_codename}'
   - '${distro_id}:${distro_codename}-security'
   - '${distro_id}ESMApps:${distro_codename}-apps-security'
-  - '${distro_id}ESM:${distro_codename}-infra-security'
-
-# Python regular expressions, matching packages to exclude from upgrading
-# Unattended-Upgrade::Package-Blacklist []
-unattended_upgrades_package_blacklist: []
-
-# This option controls whether the development release of Ubuntu will be
-# upgraded automatically. Valid values are "true", "false", and "auto".
-# Unattended-Upgrade::DevRelease "auto";
-unattended_upgrades_devrelease: 'auto'
-
-# This option allows you to control if on a unclean dpkg exit
 # unattended-upgrades will automatically run
 #   dpkg --force-confold --configure -a
 # The default is true, to ensure updates keep getting installed

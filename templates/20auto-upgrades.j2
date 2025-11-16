@@ -1,13 +1,25 @@
-# {{ ansible_managed }} 
-{% if unattended_upgrades_update_package_list %}
+# {{ ansible_managed }}
+{# Update package lists automatically #}
+{% if unattended_upgrades_update_package_list is defined and unattended_upgrades_update_package_list %}
 APT::Periodic::Update-Package-Lists "{{ unattended_upgrades_update_package_list }}";
 {% endif %}
-{% if unattended_upgrades_upgrade %}
-APT::Periodic::Unattended-Upgrade "{{ unattended_upgrades_upgrade }}";
-{% endif %}
-{% if unattended_upgrades_download_upgradable_packages %}
+{# Download upgradeable packages #}
+{% if unattended_upgrades_download_upgradable_packages is defined and unattended_upgrades_download_upgradable_packages %}
 APT::Periodic::Download-Upgradeable-Packages "{{ unattended_upgrades_download_upgradable_packages }}";
 {% endif %}
-{% if unattended_upgrades_autoclean_interval %}
+{# Run unattended upgrades #}
+{% if unattended_upgrades_upgrade is defined and unattended_upgrades_upgrade %}
+APT::Periodic::Unattended-Upgrade "{{ unattended_upgrades_upgrade }}";
+{% endif %}
+{# Auto clean packages #}
+{% if unattended_upgrades_autoclean_interval is defined and unattended_upgrades_autoclean_interval %}
 APT::Periodic::AutocleanInterval "{{ unattended_upgrades_autoclean_interval }}";
+{% endif %}
+{# Additional custom configurations #}
+{% if unattended_upgrades_append_config is defined and unattended_upgrades_append_config %}
+{%   for item in unattended_upgrades_extra_config %}
+{%     if item.name == '20auto-upgrades' and item.config is defined and item.config %}
+{{ item.config }}
+{%     endif %}
+{%   endfor %}
 {% endif %}

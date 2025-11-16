@@ -1,14 +1,12 @@
 ---
 
 - name: Install unattended_upgrades tasks
-  when: ansible_os_family == 'Debian'
   tags:
     - unattended_upgrades_install
     - unattended_upgrades
   become: true
   block:
-  - name: Manage Install packages 
-    ansible.builtin.apt:
+  - name: Install packages
+    ansible.builtin.package:
       name: "{{ unattended_upgrades_package_name }}"
-      update_cache: true
       state: "{{ unattended_upgrades_package_ensure }}"
